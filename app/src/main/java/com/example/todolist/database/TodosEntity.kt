@@ -6,7 +6,7 @@ import androidx.room.Index
 import androidx.room.PrimaryKey
 
 @Entity(
-    tableName = "todosTable",
+    tableName = "todos_table",
     indices = [Index("id")]
 )
 class TodoEntity(
@@ -14,9 +14,9 @@ class TodoEntity(
     @ColumnInfo(name = "id")
     val id: Long? = null,
 
-    @ColumnInfo(name = "isDone")
+    @ColumnInfo(name = "is_done")
     val isDone: Boolean,
 
-    @ColumnInfo(name = "taskTitle")
+    @ColumnInfo(name = "task_title")
     val taskTitle: String
 )

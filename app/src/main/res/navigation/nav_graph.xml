@@ -13,10 +13,23 @@
         <action
             android:id="@+id/action_FirstFragment_to_addDialog"
             app:destination="@id/addDialog" />
+        <argument
+            android:name="myArg"
+            app:argType="string"
+            android:defaultValue="" />
     </fragment>
 
     <dialog
         android:id="@+id/addDialog"
         android:name="com.example.todolis.AddDialog"
-        android:label="AddDialog" />
+        android:label="AddDialog" >
+        <action
+            android:id="@+id/action_addDialog_to_FirstFragment"
+            app:destination="@id/FirstFragment" >
+            <argument
+                android:name="myArg"
+                app:argType="string"
+                android:defaultValue=""/>
+        </action>
+    </dialog>
 </navigation>

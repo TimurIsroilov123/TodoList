@@ -9,7 +9,11 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import android.view.Menu
 import android.view.MenuItem
+import androidx.activity.viewModels
 import com.example.todolist.databinding.ActivityMainBinding
+import com.example.todolist.models.TodoViewModelFactory
+import com.example.todolist.models.TodosViewModel
+import com.example.todolist.recycler_staff.TodoAdapter
 
 class MainActivity : AppCompatActivity() {
 
@@ -23,7 +27,6 @@ class MainActivity : AppCompatActivity() {
 
         val navController = findNavController(R.id.nav_host_fragment_content_main)
         appBarConfiguration = AppBarConfiguration(navController.graph)
-
 
     }
 

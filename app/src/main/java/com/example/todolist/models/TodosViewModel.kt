@@ -1,36 +1,22 @@
 package com.example.todolist.models
 
-import android.content.Context
-import android.widget.EditText
 import androidx.lifecycle.*
-import com.example.todolist.App
-import com.example.todolist.App.Companion.todosDB
 import com.example.todolist.Repository
 import com.example.todolist.database.TodoEntity
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class TodosViewModel : ViewModel() {
+class TodosViewModel(private val repository: Repository) : ViewModel() {
 
-    val observableTodos: LiveData<List<TodoEntity>> by lazy {
-        todosDB.todosDao.getTodosObservable()
+    val allTodos: LiveData<List<TodoEntity>> = repository.allTodos.asLiveData()
+
+    fun insertTodo(todoEntity: TodoEntity) = viewModelScope.launch {
+        repository.insertTodo(todoEntity)
     }
-
-    fun addTask(etTask: EditText) {
-        viewModelScope.launch(Dispatchers.IO) {
-            Repository.addNew(TodoModel(false, etTask.text.toString()))
-        }
-    }
-
 }
 
-class TodoViewModelFactory : ViewModelProvider.Factory {
+class TodoViewModelFactory(private val repository: Repository) : ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        return TodosViewModel() as T
+        @Suppress("UNCHECKED_CAST")
+        return TodosViewModel(repository) as T
     }
 }
-
-
-//    fun getTodos(): Observable<TodoModel> {
-//        return Repository.getAllTodos()
-//    }

@@ -2,16 +2,13 @@ package com.example.todolist
 
 import android.app.Application
 import com.example.todolist.database.TodosDataBase
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.SupervisorJob
 
 class App : Application() {
 
-    override fun onCreate() {
-        super.onCreate()
+    val applicationScope = CoroutineScope(SupervisorJob())
 
-        todosDB = TodosDataBase.create(this)
-    }
-
-    companion object {
-        lateinit var todosDB: TodosDataBase
-    }
+    val database by lazy { TodosDataBase.create(this, applicationScope) }
+    val repository by lazy { Repository(database.todosDao()) }
 }
