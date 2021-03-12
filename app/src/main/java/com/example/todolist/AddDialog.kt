@@ -29,7 +29,7 @@ class AddDialog : BottomSheetDialogFragment() {
 
         val binding = AddNewDialogBinding.bind(view)
 
-        binding.btAddTask.setOnClickListener {
+        binding.ivAddTask.setOnClickListener {
             val task = binding.etTask.text.toString()
             val action = AddDialogDirections.actionAddDialogToFirstFragment(task)
             findNavController().navigate(action)
