@@ -3,11 +3,12 @@ package com.example.todolist.models
 import androidx.lifecycle.*
 import com.example.todolist.Repository
 import com.example.todolist.database.TodoEntity
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
 class TodosViewModel(private val repository: Repository) : ViewModel() {
 
-    val allTodos: LiveData<List<TodoEntity>> = repository.allTodos.asLiveData()
+    val allTodos: Flow<List<TodoEntity>> = repository.allTodos
 
     fun insertTodo(todoEntity: TodoEntity) = viewModelScope.launch {
         repository.insertTodo(todoEntity)

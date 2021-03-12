@@ -7,7 +7,7 @@ import kotlinx.coroutines.SupervisorJob
 
 class App : Application() {
 
-    val applicationScope = CoroutineScope(SupervisorJob())
+    private val applicationScope = CoroutineScope(SupervisorJob())
 
     val database by lazy { TodosDataBase.create(this, applicationScope) }
     val repository by lazy { Repository(database.todosDao()) }

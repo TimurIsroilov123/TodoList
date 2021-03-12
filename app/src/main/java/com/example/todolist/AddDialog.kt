@@ -16,7 +16,6 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 class AddDialog : BottomSheetDialogFragment() {
 
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -35,6 +34,5 @@ class AddDialog : BottomSheetDialogFragment() {
             val action = AddDialogDirections.actionAddDialogToFirstFragment(task)
             findNavController().navigate(action)
         }
-
     }
 }

@@ -1,34 +1,25 @@
 package com.example.todolist
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.viewModels
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.todolist.database.TodoEntity
 import com.example.todolist.recycler_staff.TodoAdapter
 import com.example.todolist.databinding.FragmentFirstBinding
-import com.example.todolist.models.TodoModel
 import com.example.todolist.models.TodoViewModelFactory
 import com.example.todolist.models.TodosViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 class FirstFragment : Fragment() {
-
-    private val todoDataSet = listOf(
-        TodoModel(false, "Algorithms"),
-        TodoModel(false, "Homework"),
-        TodoModel(false, "PE"),
-        TodoModel(true, "Take a rest")
-    )
 
     val args: FirstFragmentArgs by navArgs()
 
@@ -61,8 +52,10 @@ class FirstFragment : Fragment() {
         binding.rvTodoList.adapter = todoAdapter
         binding.rvTodoList.layoutManager = LinearLayoutManager(requireContext())
 
-        viewModel.allTodos.observe(viewLifecycleOwner) {
-            it.let { todoAdapter.submitList(it) }
+        viewModel.viewModelScope.launch(Dispatchers.Main) {
+            viewModel.allTodos.collect {
+                todoAdapter.submitList(it)
+            }
         }
 
         binding.floatingActionButton.setOnClickListener {

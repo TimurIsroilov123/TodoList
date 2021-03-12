@@ -1,6 +1,5 @@
 package com.example.todolist.database
 
-import androidx.lifecycle.LiveData
 import androidx.room.*
 import kotlinx.coroutines.flow.Flow
 
@@ -15,14 +14,4 @@ interface TodosDAO {
 
     @Query("Delete From todos_table")
     suspend fun deleteAll()
-
-//    @Update
-//    suspend fun updateTask(todoEntity: TodoEntity)
-//
-//    @Query("Select * from todos_table")
-//    fun getTodosObservable() : LiveData<List<TodoEntity>>
-
-
-//    @Query("Select * from todosTable")
-//    fun getTodosObservable() : Observable<TodoEntity>
 }
