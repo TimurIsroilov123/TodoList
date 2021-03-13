@@ -1,24 +1,17 @@
 package com.example.todolist.database
 
-import androidx.lifecycle.LiveData
 import androidx.room.*
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface TodosDAO {
 
-    @Query("Select * From todosTable")
-    suspend fun getAll(): List<TodoEntity>
+    @Query("Select * From todos_table")
+    fun getAllWithFLow(): Flow<List<TodoEntity>>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(todoEntity: TodoEntity)
 
-    @Update
-    suspend fun updateTask(todoEntity: TodoEntity)
-
-    @Query("Select * from todosTable")
-    fun getTodosObservable() : LiveData<List<TodoEntity>>
-
-
-//    @Query("Select * from todosTable")
-//    fun getTodosObservable() : Observable<TodoEntity>
+    @Query("Delete From todos_table")
+    suspend fun deleteAll()
 }
