@@ -10,7 +10,7 @@ import com.example.todolist.R
 import com.example.todolist.database.TodoEntity
 import com.example.todolist.databinding.ItemTodoBinding
 
-class TodoAdapter : ListAdapter<TodoEntity, TodoAdapter.TodoViewHolder>(TodosComparator()) {
+class TodoAdapter : ListAdapter<TodoEntity, TodoAdapter.TodoViewHolder>(TodosComparator) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int):
             TodoViewHolder {
@@ -38,13 +38,16 @@ class TodoAdapter : ListAdapter<TodoEntity, TodoAdapter.TodoViewHolder>(TodosCom
         }
     }
 
-    class TodosComparator : DiffUtil.ItemCallback<TodoEntity>() {
-        override fun areItemsTheSame(oldItem: TodoEntity, newItem: TodoEntity): Boolean {
-            return oldItem === newItem
-        }
+    companion object {
+        private val TodosComparator = object : DiffUtil.ItemCallback<TodoEntity>() {
+            override fun areItemsTheSame(oldItem: TodoEntity, newItem: TodoEntity): Boolean {
+                return oldItem === newItem
+            }
 
-        override fun areContentsTheSame(oldItem: TodoEntity, newItem: TodoEntity): Boolean {
-            return oldItem.taskTitle == newItem.taskTitle
+            override fun areContentsTheSame(oldItem: TodoEntity, newItem: TodoEntity): Boolean {
+                return oldItem.taskTitle == newItem.taskTitle
+            }
         }
     }
+
 }

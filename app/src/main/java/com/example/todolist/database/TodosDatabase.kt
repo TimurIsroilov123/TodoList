@@ -31,8 +31,6 @@ abstract class TodosDataBase : RoomDatabase() {
 
         suspend fun populateDatabase(todoDao: TodosDAO) {
             todoDao.deleteAll()
-
-            todoDao.insert(TodoEntity(isDone = false, taskTitle = "Learn Algorithms"))
         }
     }
 
