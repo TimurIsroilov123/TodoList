@@ -7,11 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.todolist.database.TodoEntity
+import com.example.todolist.database.Todo
 import com.example.todolist.recycler_staff.TodoAdapter
 import com.example.todolist.databinding.FragmentFirstBinding
 import com.example.todolist.models.TodoViewModelFactory
@@ -46,14 +47,20 @@ class FirstFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         if (args.myArg != "") {
-            viewModel.insertTodo(TodoEntity(id = null, false, args.myArg))
+            viewModel.insertTodo(Todo(id = null, false, args.myArg))
+        } else {
+            Toast.makeText(
+                requireContext(),
+                "Please add at least one character",
+                Toast.LENGTH_SHORT
+            )
+                .show()
         }
 
-        binding.rvTodoList.layoutManager = LinearLayoutManager(requireContext())
         binding.rvTodoList.adapter = todoAdapter
         binding.rvTodoList.layoutManager = LinearLayoutManager(requireContext())
 
-        viewModel.viewModelScope.launch(Dispatchers.Main) {
+        lifecycleScope.launch(Dispatchers.Main) {
             viewModel.allTodos.collect {
                 todoAdapter.submitList(it)
             }

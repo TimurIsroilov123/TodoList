@@ -7,10 +7,9 @@ import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
-import com.example.todolist.App
 
 @Database(
-    entities = [TodoEntity::class], version = 1, exportSchema = false
+    entities = [Todo::class], version = 1, exportSchema = false
 )
 abstract class TodosDataBase : RoomDatabase() {
 
@@ -24,13 +23,9 @@ abstract class TodosDataBase : RoomDatabase() {
             super.onCreate(db)
             INSTANCE?.let {
                 scope.launch {
-                    populateDatabase(it.todosDao())
+                    it.todosDao().deleteAll()
                 }
             }
-        }
-
-        suspend fun populateDatabase(todoDao: TodosDAO) {
-            todoDao.deleteAll()
         }
     }
 

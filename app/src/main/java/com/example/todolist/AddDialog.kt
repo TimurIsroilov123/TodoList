@@ -4,14 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.viewModels
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.example.todolist.R
-import com.example.todolist.database.TodoEntity
 import com.example.todolist.databinding.AddNewDialogBinding
-import com.example.todolist.models.TodoViewModelFactory
-import com.example.todolist.models.TodosViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 class AddDialog : BottomSheetDialogFragment() {

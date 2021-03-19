@@ -9,7 +9,7 @@ import androidx.room.PrimaryKey
     tableName = "todos_table",
     indices = [Index("id")]
 )
-class TodoEntity(
+data class Todo(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
     val id: Long? = null,

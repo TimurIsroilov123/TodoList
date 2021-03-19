@@ -3,14 +3,13 @@ package com.example.todolist.recycler_staff
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.todolist.R
-import com.example.todolist.database.TodoEntity
+import com.example.todolist.database.Todo
 import com.example.todolist.databinding.ItemTodoBinding
 
-class TodoAdapter : ListAdapter<TodoEntity, TodoAdapter.TodoViewHolder>(TodosComparator) {
+class TodoAdapter : ListAdapter<Todo, TodoAdapter.TodoViewHolder>(TodoDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int):
             TodoViewHolder {
@@ -18,9 +17,9 @@ class TodoAdapter : ListAdapter<TodoEntity, TodoAdapter.TodoViewHolder>(TodosCom
     }
 
     override fun onBindViewHolder(holder: TodoViewHolder, position: Int) {
-        holder.onBind(getItem(position).taskTitle)
+        val item = getItem(position)
+        holder.onBind(item.taskTitle)
     }
-
 
     class TodoViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val binding = ItemTodoBinding.bind(itemView)
@@ -37,17 +36,4 @@ class TodoAdapter : ListAdapter<TodoEntity, TodoAdapter.TodoViewHolder>(TodosCom
             }
         }
     }
-
-    companion object {
-        private val TodosComparator = object : DiffUtil.ItemCallback<TodoEntity>() {
-            override fun areItemsTheSame(oldItem: TodoEntity, newItem: TodoEntity): Boolean {
-                return oldItem === newItem
-            }
-
-            override fun areContentsTheSame(oldItem: TodoEntity, newItem: TodoEntity): Boolean {
-                return oldItem.taskTitle == newItem.taskTitle
-            }
-        }
-    }
-
 }
