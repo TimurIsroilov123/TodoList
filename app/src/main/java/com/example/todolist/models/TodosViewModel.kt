@@ -27,16 +27,6 @@ class TodosViewModel(application: Application, interactors: Interactors
         }
 }
 
-//class TodosViewModel(private val repository: Repository) : ViewModel() {
-//
-//    val allTodos: Flow<List<TodoEntity>> = repository.allTodos
-//
-//    fun insertTodo(todoEntity: TodoEntity) =
-//        viewModelScope.launch(Dispatchers.IO) {
-//            repository.add(todoEntity)
-//        }
-//}
-
 object TodoViewModelFactory : ViewModelProvider.Factory {
     lateinit var application: Application
 

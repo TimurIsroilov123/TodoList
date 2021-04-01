@@ -17,28 +17,12 @@ abstract class TodosDataBase : RoomDatabase() {
 
     abstract fun todosDao(): TodosDAO
 
-//    private class TodoDataBaseCallback(
-//        private val scope: CoroutineScope
-//    ) : RoomDatabase.Callback() {
-//
-//        //Todo figure out usage of this method
-//        override fun onCreate(db: SupportSQLiteDatabase) {
-//            super.onCreate(db)
-//            INSTANCE?.let {
-//                scope.launch {
-//                    it.todosDao().deleteAll()
-//                }
-//            }
-//        }
-//    }
-
     companion object {
 
         private var INSTANCE: TodosDataBase? = null
 
         fun create(
             context: Context
-//            scope: CoroutineScope
         ): TodosDataBase {
             return INSTANCE ?: synchronized(this) {
                 val instance = Room.databaseBuilder(
@@ -46,7 +30,6 @@ abstract class TodosDataBase : RoomDatabase() {
                     TodosDataBase::class.java,
                     "todos_database"
                 )
- //                   .addCallback(TodoDataBaseCallback(scope))
                     .build()
                  INSTANCE = instance
                 instance

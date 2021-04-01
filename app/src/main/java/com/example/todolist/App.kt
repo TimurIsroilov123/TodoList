@@ -13,11 +13,7 @@ import kotlinx.coroutines.SupervisorJob
 
 class App : Application() {
 
-//    private val applicationScope = CoroutineScope(SupervisorJob())
-//
-//    val database by lazy { TodosDataBase.create(this, applicationScope) }
     val database by lazy { TodosDataBase.create(this) }
-    val repository by lazy { Repository(database.todosDao()) }
 
     override fun onCreate() {
         super.onCreate()
