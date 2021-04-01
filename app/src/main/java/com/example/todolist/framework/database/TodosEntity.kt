@@ -1,4 +1,4 @@
-package com.example.todolist.database
+package com.example.todolist.framework.database
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
@@ -9,7 +9,7 @@ import androidx.room.PrimaryKey
     tableName = "todos_table",
     indices = [Index("id")]
 )
-data class Todo(
+data class TodoEntity(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
     val id: Long? = null,

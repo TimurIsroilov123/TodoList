@@ -1,24 +1,58 @@
 package com.example.todolist.models
 
+import android.app.Application
 import androidx.lifecycle.*
-import com.example.todolist.Repository
-import com.example.todolist.database.Todo
+import com.example.core.domain.Todo
+import com.example.todolist.MainViewModel
+import com.example.todolist.framework.Interactors
+import com.example.todolist.framework.database.TodoEntity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.launch
 
-class TodosViewModel(private val repository: Repository) : ViewModel() {
+class TodosViewModel(application: Application, interactors: Interactors
+) : MainViewModel(application, interactors) {
 
-    val allTodos: Flow<List<Todo>> = repository.allTodos
+    var allTodos: Flow<List<Todo>> = flowOf()
 
-    fun insertTodo(todo: Todo) = viewModelScope.launch(Dispatchers.IO) {
-        repository.insertTodo(todo)
-    }
+    fun getTodosFromDb() =
+        viewModelScope.launch(Dispatchers.IO) {
+            allTodos = interactors.getTodos()
+        }
+
+    fun insertTodo(todo: Todo) =
+        viewModelScope.launch(Dispatchers.IO) {
+            interactors.addTodo(todo)
+        }
 }
 
-class TodoViewModelFactory(private val repository: Repository) : ViewModelProvider.Factory {
+//class TodosViewModel(private val repository: Repository) : ViewModel() {
+//
+//    val allTodos: Flow<List<TodoEntity>> = repository.allTodos
+//
+//    fun insertTodo(todoEntity: TodoEntity) =
+//        viewModelScope.launch(Dispatchers.IO) {
+//            repository.add(todoEntity)
+//        }
+//}
+
+object TodoViewModelFactory : ViewModelProvider.Factory {
+    lateinit var application: Application
+
+    lateinit var dependencies: Interactors
+
+    fun inject(application: Application, dependencies: Interactors) {
+        TodoViewModelFactory.application = application
+        TodoViewModelFactory.dependencies = dependencies
+    }
+
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         @Suppress("UNCHECKED_CAST")
-        return TodosViewModel(repository) as T
+        return modelClass.getConstructor(Application::class.java, Interactors::class.java)
+            .newInstance(
+                application,
+                dependencies
+            )
     }
 }
