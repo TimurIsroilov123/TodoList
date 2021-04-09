@@ -1,8 +1,8 @@
-package com.example.todolist
+package com.example.todolist.ui
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
-import com.example.todolist.framework.Interactors
+import com.example.todolist.data.Interactors
 
 open class MainViewModel(
     application: Application,

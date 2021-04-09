@@ -1,16 +1,13 @@
-package com.example.todolist.framework.database
+package com.example.todolist.data
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import androidx.sqlite.db.SupportSQLiteDatabase
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.launch
 
 @Database(
     entities = [TodoEntity::class],
-    version = 1,
+    version = 3,
     exportSchema = false
 )
 abstract class TodosDataBase : RoomDatabase() {
@@ -30,6 +27,7 @@ abstract class TodosDataBase : RoomDatabase() {
                     TodosDataBase::class.java,
                     "todos_database"
                 )
+                    .fallbackToDestructiveMigration()
                     .build()
                  INSTANCE = instance
                 instance

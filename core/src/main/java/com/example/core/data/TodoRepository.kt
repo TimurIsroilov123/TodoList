@@ -7,5 +7,13 @@ class TodoRepository(private val dataSource: TodoDataSource) {
 
     suspend fun getTodos() = dataSource.readAll()
 
-    suspend fun removeTodos() = dataSource.remove()
+    suspend fun getDone() = dataSource.getDone()
+
+    suspend fun removeTodos() = dataSource.removeAll()
+
+    suspend fun removeAt(id: Int) = dataSource.removeAt(id)
+
+    suspend fun deleteTodo(todo: Todo) = dataSource.deleteTodo(todo)
+
+    suspend fun updateTodo(todo: Todo) = dataSource.update(todo)
 }
