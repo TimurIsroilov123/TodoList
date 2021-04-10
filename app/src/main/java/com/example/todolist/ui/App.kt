@@ -10,8 +10,6 @@ import com.example.todolist.models.TodoViewModelFactory
 
 class App : Application() {
 
-    val database by lazy { TodosDataBase.create(this) }
-
     override fun onCreate() {
         super.onCreate()
 

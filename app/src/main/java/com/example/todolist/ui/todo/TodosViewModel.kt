@@ -14,7 +14,6 @@ import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.receiveAsFlow
 
-
 class TodosViewModel(
     application: Application, interactors: Interactors
 ) : MainViewModel(application, interactors) {
@@ -23,6 +22,7 @@ class TodosViewModel(
     var doneTodos: Flow<List<Todo>> = flowOf()
     var inProgressTodos: Flow<List<Todo>> = flowOf()
 
+    var task: Todo? = null
 
     private val tasksEventChannel = Channel<TasksEvent>()
     val tasksEvent = tasksEventChannel.receiveAsFlow()
@@ -74,10 +74,6 @@ class TodosViewModel(
 
     fun updateTodo(todo: Todo) = viewModelScope.launch {
         interactors.updateTodo(todo)
-    }
-
-    fun onAddNewTodoClick(task: Todo) = viewModelScope.launch {
-        interactors.addTodo(task)
     }
 
     sealed class TasksEvent {

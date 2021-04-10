@@ -29,7 +29,6 @@ import java.util.*
 
 class FirstFragment : Fragment(R.layout.fragment_first), TodoAdapter.OnItemClickListener {
 
-    private val args: FirstFragmentArgs by navArgs()
     private val viewModel: TodosViewModel by viewModels {
         TodoViewModelFactory
     }
@@ -48,12 +47,8 @@ class FirstFragment : Fragment(R.layout.fragment_first), TodoAdapter.OnItemClick
         return binding.root
     }
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        val sdf = SimpleDateFormat("dd/M/yyyy hh:mm")
-        val currentDate = sdf.format(Date())
 
         viewModel.apply {
             getDoneTodos()
@@ -68,14 +63,6 @@ class FirstFragment : Fragment(R.layout.fragment_first), TodoAdapter.OnItemClick
                 viewModel.allTodos.collect {
                     todoAdapter.submitList(it)
                 }
-            }
-
-            if (args.myArg.isNotBlank()) {
-                if (sendTask != null && sendTask?.taskTitle != args.myArg) {
-                    val todo = sendTask
-                    viewModel.updateTodo(todo!!.copy(taskTitle = args.myArg))
-                } else if (sendTask == null)
-                    viewModel.addTodo(Todo(id = null, false, args.myArg, currentDate))
             }
 
             floatingActionButton.setOnClickListener {
